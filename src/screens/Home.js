@@ -12,19 +12,24 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import GetLocation from 'react-native-get-location';
 
+
 const Home = ({navigation, route}) => {
   const destination = route?.params?.details;
   const geometry = destination?.geometry;
-
+  const location = geometry?.location;
   const latitude = location?.lat;
   const longitude = location?.lng;
-  const location = geometry?.location;
+
+  const formatted_address = destination?.formatted_address;
+
+  console.log(latitude, longitude, formatted_address, '--from home');
+
+  const mapRef = useRef();
   const [userLocation, setuserLocation] = useState({
     latitude: 37.78825,
     longitude: -122.4324,
   });
   const [origin, setorigin] = useState(null);
-  const formatted_address = destination?.formatted_address;
 
   useEffect(() => {
     const getLocation = () => {
@@ -34,6 +39,7 @@ const Home = ({navigation, route}) => {
         maximumAge: 10000,
       })
         .then(async location => {
+        
           setuserLocation({
             latitude: location.latitude,
             longitude: location.longitude,
@@ -51,10 +57,7 @@ const Home = ({navigation, route}) => {
           const {data} =
             await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.latitude},${location.longitude}&key=${apiKey}
           `);
-          console.log(
-            data.results[0].formatted_address,
-            '--from current location',
-          );
+          console.log(data.results[0].formatted_address,'--from current location');
           setorigin(data.results[0].formatted_address);
         })
         .catch(error => {
@@ -65,12 +68,29 @@ const Home = ({navigation, route}) => {
     getLocation();
   }, []);
 
+  useEffect(() => {
+    if (latitude && longitude) {
+      const coordinates = [
+        {latitude: userLocation.latitude, longitude: userLocation.longitude},
+        {
+          latitude: latitude,
+          longitude: longitude,
+        },
+      ];
+
+      mapRef.current.fitToCoordinates(coordinates, {
+        edgePadding: {top: 50, right: 50, bottom: 50, left: 50},
+        animated: true,
+      });
+    }
+  }, [latitude, longitude, userLocation]);
+
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       {/* ///First Box/// */}
       <View style={{flex: 0.7}}>
         <MapView
-          // ref={mapRef}
+          ref={mapRef}
           style={{flex: 1}}
           provider={PROVIDER_GOOGLE}
           showsUserLocation={false}
@@ -87,7 +107,16 @@ const Home = ({navigation, route}) => {
               longitude: userLocation?.longitude,
             }}
           />
-          
+
+          {longitude && latitude && (
+            <Marker
+              coordinate={{
+                latitude: latitude,
+                longitude: longitude,
+              }}
+              pinColor="green"
+            />
+          )}
         </MapView>
         {/* ////Menu box//// */}
 
