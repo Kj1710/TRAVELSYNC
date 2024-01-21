@@ -83,7 +83,7 @@ const Home = ({navigation, route}) => {
         animated: true,
       });
     }
-  }, [latitude, longitude, userLocation]);
+  }, 
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
