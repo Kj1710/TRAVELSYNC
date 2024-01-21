@@ -12,11 +12,20 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import GetLocation from 'react-native-get-location';
 
-const Home = () => {
+const Home = ({navigation, route}) => {
+  const destination = route?.params?.details;
+  const geometry = destination?.geometry;
+
+  const latitude = location?.lat;
+  const longitude = location?.lng;
+  const location = geometry?.location;
   const [userLocation, setuserLocation] = useState({
     latitude: 37.78825,
     longitude: -122.4324,
   });
+  const [origin, setorigin] = useState(null);
+  const formatted_address = destination?.formatted_address;
+
   useEffect(() => {
     const getLocation = () => {
       GetLocation.getCurrentPosition({
@@ -78,15 +87,7 @@ const Home = () => {
               longitude: userLocation?.longitude,
             }}
           />
-          {longitude && latitude && (
-            <Marker
-              coordinate={{
-                latitude: latitude,
-                longitude: longitude,
-              }}
-              pinColor="green"
-            />
-          )}
+          
         </MapView>
         {/* ////Menu box//// */}
 
