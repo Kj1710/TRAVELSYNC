@@ -11,6 +11,9 @@ import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import GetLocation from 'react-native-get-location';
+import axios from "axios"
+import {apiKey} from '../utils/apikey';
+
 
 
 const Home = ({navigation, route}) => {
