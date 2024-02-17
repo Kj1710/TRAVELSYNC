@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import React, {useEffect, useState, useRef} from 'react';
-import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE, Marker , Polygon} from 'react-native-maps';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import GetLocation from 'react-native-get-location';

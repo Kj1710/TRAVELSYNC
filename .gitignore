@@ -3,6 +3,7 @@
 .DS_Store
 apikey.js
 
+
 # Xcode
 #
 build/
@@ -66,3 +67,4 @@ yarn-error.log
 
 # testing
 /coverage
+android/app/src/main/AndroidManifest.xml
