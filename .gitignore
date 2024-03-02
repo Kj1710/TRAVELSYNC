@@ -2,7 +2,8 @@
 #
 .DS_Store
 apikey.js
-
+node_modules/
+AndroidManifest.xml
 
 # Xcode
 #
@@ -39,7 +40,6 @@ local.properties
 # node.js
 #
 node_modules/
-.env
 npm-debug.log
 yarn-error.log
 
@@ -67,4 +67,3 @@ yarn-error.log
 
 # testing
 /coverage
-android/app/src/main/AndroidManifest.xml

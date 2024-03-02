@@ -1,4 +1,4 @@
-package com.rapido
+package com.travelapp
 
 import android.app.Application
 import com.facebook.react.PackageList
